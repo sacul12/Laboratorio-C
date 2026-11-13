@@ -5,14 +5,17 @@
 int main(void)
 {
     int opcion = 1;
-    printf("CASI INGE - ORBITA DE ORION\n");
+    mostrarTitulo("CASI INGE - ORBITA DE ORION");
+    printf("Escenario 2: orbita terrestre baja\n");
     while (opcion > 0) {
-        printf("\n1. Fuerza y velocidad orbital\n");
-        printf("2. Periodo orbital\n");
-        printf("3. Aceleracion centripeta\n");
-        printf("4. Pulso lateral\n");
-        printf("5. Simular una vuelta\n");
-        printf("0. Salir\n");
+        mostrarTitulo("MENU PRINCIPAL");
+        printf("| %-48s |\n", "1. Fuerza y velocidad orbital");
+        printf("| %-48s |\n", "2. Periodo orbital");
+        printf("| %-48s |\n", "3. Aceleracion centripeta");
+        printf("| %-48s |\n", "4. Pulso lateral");
+        printf("| %-48s |\n", "5. Simular una vuelta");
+        printf("| %-48s |\n", "0. Salir");
+        printf("+--------------------------------------------------+\n");
         opcion = leerOpcion();
         switch (opcion) {
             case 1: calcularVelocidad(); break;
@@ -22,6 +25,6 @@ int main(void)
             case 5: simularVuelta(); break;
         }
     }
-    printf("Fin del programa.\n");
+    mostrarTitulo("Fin del programa.");
     return 0;
 }
