@@ -21,6 +21,10 @@ En VS Code, abrir esta carpeta, la que contiene `main.c`. En Terminal > New Term
 
 ## Funcionamiento
 
+La interfaz usa recuadros de texto para separar el menú y cada cálculo. La opción 5 muestra un dibujo de la Tierra y doce posiciones: `O` es Orion, `*` indica lugares recorridos y `.` los pendientes. Orion avanza en sentido antihorario y vuelve al inicio en el turno 12. El dibujo es esquemático, sin escala. Cada turno muestra altura, velocidad, ángulo, tiempo transcurrido y restante, porcentaje y una barra que se llena con `#`. Cada vista se imprime debajo de la anterior para conservar el historial.
+
+La función `mostrarOrbita`, en el módulo de interfaz, usa un arreglo de caracteres, un ciclo `for`, condiciones y `printf`. La expresión `turno % TURNOS` permite volver a la posición cero al completar doce turnos. No requiere bibliotecas gráficas. El dibujo y la barra son mejoras opcionales de presentación; la consigna exige una interfaz clara por consola. Estas mejoras fueron solicitadas a Codex / ChatGPT como una interfaz sencilla por terminal y una presentación más linda de la simulación por turnos. Se comprobaron las 42 pruebas anteriores y las 13 vistas desde el inicio hasta completar una vuelta.
+
 Las opciones 1 a 4 son cálculos independientes. Cada una pide datos y muestra la fórmula con los valores ingresados. La opción 5 inicia una simulación circular independiente: se ingresa la altura y se responde S para avanzar 30 grados o N para terminar. Doce turnos completan una vuelta. Al terminar aparece un reporte completo o parcial. La opción 0 cierra el programa.
 
 La estructura `Orbita` tiene altura, velocidad y período. El arreglo `tiempos[12]` registra los turnos realizados; sólo se leen las posiciones que se llenaron. Los punteros aparecen en las funciones de lectura: `&altura` entrega la dirección de una variable y `*numero = valor` guarda el dato en esa dirección. Cada cálculo tiene su propia función y variables locales.
