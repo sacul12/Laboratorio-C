@@ -1,20 +1,21 @@
 #include <stdio.h>
+#include <math.h>
 #include "artemis.h"
 #include "validaciones.h"
-#include <math.h>
 
 /* La altura se ingresa en km y el radio se calcula en metros. */
 static double calcularRadio(double altura)
 {
     double radio;
     radio = RADIO_TIERRA + altura * 1000;
-    printf("r = %.0f + %.2f * 1000 = %.4f m\n", RADIO_TIERRA, altura, radio);
+    printf("r = %.0f + %.2f * 1000 = %.2f m\n", RADIO_TIERRA, altura, radio);
     return radio;
 }
 
 void calcularVelocidad(void)
 {
     double altura, masa, radio, velocidad, fuerza;
+    mostrarTitulo("1. FUERZA Y VELOCIDAD ORBITAL");
     if (!leerNumero("Altura (100 a 2000 km): ", 100, 2000, &altura)) return;
     radio = calcularRadio(altura);
     if (!leerNumero("Masa de Orion (1 a 100000 kg): ", 1, 100000, &masa)) return;
@@ -33,6 +34,7 @@ void calcularVelocidad(void)
 void calcularPeriodo(void)
 {
     double altura, radio, velocidad, periodo;
+    mostrarTitulo("2. PERIODO ORBITAL");
     if (!leerNumero("Altura (100 a 2000 km): ", 100, 2000, &altura)) return;
     radio = calcularRadio(altura);
     velocidad = sqrt(G * MASA_TIERRA / radio);
@@ -46,6 +48,7 @@ void calcularPeriodo(void)
 void calcularAceleracion(void)
 {
     double altura, radio, aceleracion;
+    mostrarTitulo("3. ACELERACION CENTRIPETA");
     if (!leerNumero("Altura (100 a 2000 km): ", 100, 2000, &altura)) return;
     radio = calcularRadio(altura);
     aceleracion = G * MASA_TIERRA / (radio * radio);
@@ -58,6 +61,7 @@ void calcularAceleracion(void)
 void calcularPulso(void)
 {
     double aceleracion, tiempo, desviacion, cambioVelocidad;
+    mostrarTitulo("4. PULSO LATERAL");
     if (!leerNumero("Aceleracion lateral (0 a 1 m/s2): ", 0, 1, &aceleracion)) return;
     if (!leerNumero("Duracion (0 a 10 s): ", 0, 10, &tiempo)) return;
     desviacion = aceleracion * tiempo * tiempo / 2;
@@ -84,21 +88,25 @@ void simularVuelta(void)
     double radio, tiempos[TURNOS];
     int cantidad = 0, i;
     char respuesta = 's';
+    mostrarTitulo("5. SIMULAR UNA VUELTA");
     if (!leerNumero("Altura de la simulacion (100 a 2000 km): ", 100, 2000, &nave.altura)) return;
     radio = calcularRadio(nave.altura);
     nave.velocidad = sqrt(G * MASA_TIERRA / radio);
     nave.periodo = 2 * PI * radio / nave.velocidad;
     printf("Modelo circular ideal, sin atmosfera ni otros cuerpos.\n");
     printf("Cada turno avanza 30 grados. Objetivo: completar 12 turnos.\n");
+    mostrarOrbita(0, nave.altura, nave.velocidad, 0, nave.periodo);
     while (cantidad < TURNOS && (respuesta == 's' || respuesta == 'S')) {
         if (!leerRespuesta(&respuesta)) break;
         if (respuesta == 's' || respuesta == 'S') {
             tiempos[cantidad] = nave.periodo * (cantidad + 1) / TURNOS;
             printf("Turno %d: %.2f s, %d grados\n", cantidad + 1, tiempos[cantidad], (cantidad + 1) * 30);
             cantidad++;
+            mostrarOrbita(cantidad, nave.altura, nave.velocidad,
+                          tiempos[cantidad - 1], nave.periodo);
         }
     }
-    printf("\nREPORTE DE LA VUELTA\n");
+    mostrarTitulo("REPORTE DE LA VUELTA");
     printf("Altura: %.2f km; velocidad: %.2f m/s\n", nave.altura, nave.velocidad);
     printf("Periodo: %.2f s (%.2f min)\n", nave.periodo, nave.periodo / 60);
     printf("Turno     Tiempo (s)\n");
