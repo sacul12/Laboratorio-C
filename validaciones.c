@@ -2,6 +2,64 @@
 #include <stdio.h>
 #include <string.h>
 #include "validaciones.h"
+#include "artemis.h"
+
+/* Interfaz de texto: solo printf y un ciclo for. */
+void mostrarTitulo(char titulo[])
+{
+    printf("\n+--------------------------------------------------+\n");
+    printf("| %-48s |\n", titulo);
+    printf("+--------------------------------------------------+\n");
+}
+
+void mostrarProgreso(int realizados, int total)
+{
+    int i;
+    printf("Orbita: [");
+    for (i = 0; i < total; i++) {
+        if (i < realizados) printf("#");
+        else printf(".");
+    }
+    printf("] %d/%d turnos\n", realizados, total);
+}
+
+/* Doce lugares del dibujo: uno por cada turno de 30 grados. */
+void mostrarOrbita(int turno, double altura, double velocidad,
+                   double tiempo, double periodo)
+{
+    char posicion[TURNOS];
+    int i;
+
+    for (i = 0; i < TURNOS; i++) {
+        if (i < turno) posicion[i] = '*';
+        else posicion[i] = '.';
+    }
+    /* El resto permite volver al lugar inicial al completar la vuelta. */
+    posicion[turno % TURNOS] = 'O';
+
+    mostrarTitulo("CONTROL DE MISION - ORION");
+    printf("\n                       %c\n", posicion[3]);
+    printf("             %c                   %c\n", posicion[4], posicion[2]);
+    printf("       %c                               %c\n", posicion[5], posicion[1]);
+    printf("                  .----------.\n");
+    printf("    %c            (   TIERRA   )            %c\n", posicion[6], posicion[0]);
+    printf("                  '----------'\n");
+    printf("       %c                               %c\n", posicion[7], posicion[11]);
+    printf("             %c                   %c\n", posicion[8], posicion[10]);
+    printf("                       %c\n\n", posicion[9]);
+    printf(" O = Orion   * = recorrido   . = pendiente\n");
+    printf(" Vista esquematica, sin escala. Giro antihorario.\n");
+    printf("----------------------------------------------------\n");
+    printf(" Turno: %2d / %d          Angulo: %3d grados\n", turno, TURNOS, turno * 30);
+    printf(" Altura: %.2f km     Velocidad: %.2f m/s\n", altura, velocidad);
+    printf(" Tiempo: %.2f s      Restante: %.2f s\n", tiempo, periodo - tiempo);
+    printf("\n ");
+    mostrarProgreso(turno, TURNOS);
+    printf(" Avance: %.0f %%\n", 100.0 * turno / TURNOS);
+    printf("----------------------------------------------------\n");
+    if (turno == TURNOS) printf(" VUELTA COMPLETA: Orion regreso al punto inicial.\n");
+    else printf(" [S] Avanzar 30 grados   [N] Terminar y ver reporte\n");
+}
 
 /* Lee hasta 63 caracteres. Si sobran, descarta la linea y vuelve a pedirla. */
 static int leerLinea(char mensaje[], char texto[])
@@ -65,4 +123,3 @@ int leerRespuesta(char *respuesta)
     }
     return 0;
 }
-//idsjdjijfdsfjs
