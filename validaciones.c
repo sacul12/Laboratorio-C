@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "validaciones.h"
-#include "artemis.h"
+#include "Artemis.h"
 
 /* Interfaz de texto: solo printf y un ciclo for. */
 void mostrarTitulo(char titulo[])

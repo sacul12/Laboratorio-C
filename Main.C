@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "artemis.h"
+#include "Artemis.h"
 #include "validaciones.h"
 
 int main(void)

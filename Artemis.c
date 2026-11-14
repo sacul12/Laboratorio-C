@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include "artemis.h"
+#include "Artemis.h"
 #include "validaciones.h"
 
 /* La altura se ingresa en km y el radio se calcula en metros. */
