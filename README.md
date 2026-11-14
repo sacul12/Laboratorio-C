@@ -6,11 +6,23 @@ Integrantes: Lucas Beneventano, Matias Davila y Marcos Pezzelato. Comisión: Com
 
 ## Abrir y ejecutar
 
-En VS Code, abrir esta carpeta, la que contiene `main.c`. En Terminal > New Terminal ejecutar uno por vez:
+En VS Code, abrir esta carpeta, la que contiene main.c. En Terminal > New Terminal ejecutar uno por vez:
 
-```powershell
+powershell
+gcc main.c Artemis.c validaciones.c -o artemis.exe
 .\artemis.exe
-```
+
+El primer comando compila el programa y el segundo lo ejecuta.
+
+Qué hace cada parte del comando de compilación:
+
+gcc: compilador de C (MinGW-w64, instalado con MSYS2). Traduce el código fuente a un programa ejecutable.
+main.c: archivo con main, el menú y el inicio del programa.
+Artemis.c: archivo con las fórmulas, los cálculos y la simulación.
+validaciones.c: archivo con el ingreso seguro de datos y la interfaz de texto.
+-o artemis.exe: define el nombre del archivo de salida. Sin esta opción, gcc crearía a.exe.
+
+Los archivos .h (Artemis.h y validaciones.h) no se escriben en el comando: el compilador los incorpora solo, por medio de los #include de cada .c. Si no aparece ningún mensaje, la compilación terminó bien y artemis.exe quedó en la misma carpeta. Se compilan los tres .c juntos porque el programa está dividido en tres módulos.
 
 ## Archivos y punto 5.1
 
